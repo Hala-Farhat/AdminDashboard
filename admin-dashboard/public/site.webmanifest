@@ -1,0 +1,18 @@
+{
+  "name": "Khabeer Admin",
+  "short_name": "Khabeer",
+  "description": "Khabeer admin dashboard",
+  "icons": [
+    {
+      "src": "/favicon.svg",
+      "sizes": "any",
+      "type": "image/svg+xml",
+      "purpose": "any maskable"
+    }
+  ],
+  "start_url": "/",
+  "scope": "/",
+  "display": "standalone",
+  "background_color": "#ffffff",
+  "theme_color": "#0077b6"
+}

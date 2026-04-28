@@ -1,0 +1,335 @@
+@import 'leaflet/dist/leaflet.css';
+@import 'leaflet-draw/dist/leaflet.draw.css';
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+
+  /* شريط تمرير واحد: لا يتوسع body/#root مع المحتوى — التمرير داخل main فقط */
+  html {
+    @apply h-full overflow-hidden;
+  }
+
+  body {
+    @apply m-0 h-full overflow-hidden;
+  }
+
+  #root {
+    @apply h-full min-h-0 overflow-hidden;
+  }
+
+  :root {
+    /* DEFAULT LIGHT THEME (Modern Light) */
+
+    /* Primary Color (Indigo-like) */
+    --primary-50: 238 242 255;
+    /* #eef2ff */
+    --primary-100: 224 231 255;
+    /* #e0e7ff */
+    --primary-200: 199 210 254;
+    /* #c7d2fe */
+    --primary-300: 165 180 252;
+    /* #a5b4fc */
+    --primary-400: 129 140 248;
+    /* #818cf8 */
+    --primary-500: 99 102 241;
+    /* #6366f1 */
+    --primary-600: 79 70 229;
+    /* #4f46e5 */
+    --primary-700: 67 56 202;
+    /* #4338ca */
+    --primary-800: 55 48 163;
+    /* #3730a3 */
+    --primary-900: 49 46 129;
+    /* #312e81 */
+    --primary-950: 30 27 75;
+    /* #1e1b4b */
+
+    /* Dark Mode Defaults (will be overridden by .dark class) */
+    --dark-bg-primary: 10 10 15;
+    /* #0a0a0f */
+    --dark-bg-secondary: 19 19 26;
+    /* #13131a */
+    --dark-bg-tertiary: 26 26 36;
+    /* #1a1a24 */
+    --dark-bg-elevated: 31 31 46;
+    /* #1f1f2e */
+
+    --dark-text-primary: 232 232 240;
+    /* #e8e8f0 */
+    --dark-text-secondary: 160 160 184;
+    /* #a0a0b8 */
+    --dark-text-muted: 107 107 128;
+    /* #6b6b80 */
+
+    --dark-border: 42 42 56;
+    /* #2a2a38 */
+
+    --dark-accent-purple: 139 124 246;
+    /* #8b7cf6 */
+
+    /* Base styles */
+    @apply bg-gray-50 text-gray-900 transition-colors duration-300;
+  }
+
+  /* DARK MODE (Professional Dark) */
+  .dark {
+    --primary-50: 238 242 255;
+    --primary-100: 224 231 255;
+    --primary-200: 165 180 252;
+    --primary-300: 129 140 248;
+    --primary-400: 99 102 241;
+    --primary-500: 99 102 241;
+    /* Keep bright in dark mode */
+    --primary-600: 79 70 229;
+    --primary-700: 67 56 202;
+    --primary-800: 55 48 163;
+    --primary-900: 49 46 129;
+    --primary-950: 30 27 75;
+
+    @apply bg-dark-bg-primary text-dark-text-primary;
+  }
+
+  /* DRACULA FANTASY THEME */
+  [data-theme="dracula"] {
+    /* Pink/Purple Primary */
+    --primary-50: 255 240 246;
+    --primary-100: 255 214 231;
+    --primary-200: 255 168 206;
+    --primary-300: 255 107 170;
+    --primary-400: 255 56 140;
+    --primary-500: 255 20 120;
+    --primary-600: 219 0 91;
+    --primary-700: 176 0 68;
+    --primary-800: 140 3 58;
+    --primary-900: 112 8 49;
+    --primary-950: 69 0 26;
+
+    /* Dracula Backgrounds */
+    --dark-bg-primary: 40 42 54;
+    /* #282a36 */
+    --dark-bg-secondary: 68 71 90;
+    /* #44475a */
+    --dark-bg-tertiary: 98 114 164;
+    /* #6272a4 (desaturated for tertiary) */
+    --dark-bg-elevated: 80 82 100;
+
+    --dark-text-primary: 248 248 242;
+    /* #f8f8f2 */
+    --dark-text-secondary: 189 147 249;
+    /* #bd93f9 (Dracula Purple) */
+    --dark-text-muted: 98 114 164;
+    /* #6272a4 */
+    --dark-border: 98 114 164;
+    --dark-accent-purple: 255 121 198;
+    /* #ff79c6 (Pink) */
+  }
+
+  /* OCEAN BLUE THEME */
+  [data-theme="ocean"] {
+    /* Cyan/Blue Primary */
+    --primary-50: 236 254 255;
+    --primary-100: 207 250 254;
+    --primary-200: 165 243 252;
+    --primary-300: 103 232 249;
+    --primary-400: 34 211 238;
+    --primary-500: 6 182 212;
+    --primary-600: 8 145 178;
+    --primary-700: 14 116 144;
+    --primary-800: 21 94 117;
+    --primary-900: 22 78 99;
+    --primary-950: 8 51 68;
+
+    /* Deep Ocean Backgrounds */
+    --dark-bg-primary: 2 6 23;
+    /* #020617 */
+    --dark-bg-secondary: 15 23 42;
+    /* #0f172a */
+    --dark-bg-tertiary: 30 41 59;
+    /* #1e293b */
+    --dark-bg-elevated: 23 37 84;
+    /* #172554 */
+
+    --dark-text-primary: 240 249 255;
+    --dark-text-secondary: 148 163 184;
+    --dark-text-muted: 100 116 139;
+    --dark-border: 30 41 59;
+    --dark-accent-purple: 56 189 248;
+    /* Sky blue as accent */
+  }
+
+  /* WARM ORANGE THEME */
+  [data-theme="orange"] {
+    /* Orange Primary */
+    --primary-50: 255 247 237;
+    --primary-100: 255 237 213;
+    --primary-200: 254 215 170;
+    --primary-300: 253 186 116;
+    --primary-400: 251 146 60;
+    --primary-500: 249 115 22;
+    --primary-600: 234 88 12;
+    --primary-700: 194 65 12;
+    --primary-800: 154 52 18;
+    --primary-900: 124 45 18;
+    --primary-950: 67 20 7;
+
+    /* Warm Dark Backgrounds */
+    --dark-bg-primary: 12 10 9;
+    /* #0c0a09 */
+    --dark-bg-secondary: 28 25 23;
+    /* #1c1917 */
+    --dark-bg-tertiary: 41 37 36;
+    /* #292524 */
+    --dark-bg-elevated: 68 64 60;
+    /* #44403c */
+
+    --dark-text-primary: 250 250 249;
+    --dark-text-secondary: 168 162 158;
+    --dark-text-muted: 120 113 108;
+    --dark-border: 68 64 60;
+    --dark-accent-purple: 251 146 60;
+    /* Orange as accent */
+  }
+
+  /* Smooth transitions for all theme changes */
+  * {
+    @apply transition-colors duration-300 ease-in-out;
+  }
+}
+
+/* Dark Mode Utilities */
+@layer utilities {
+
+  /* Glassmorphism effect for dark mode cards */
+  .glass-dark {
+    @apply backdrop-blur-xl bg-dark-bg-secondary/80 border border-dark-border;
+  }
+
+  /* Premium gradient backgrounds */
+  .gradient-dark-card {
+    background: linear-gradient(135deg, rgb(var(--dark-bg-secondary) / 0.9) 0%, rgb(var(--dark-bg-tertiary) / 0.9) 100%);
+  }
+
+  /* Glow effect for accents */
+  .glow-purple {
+    box-shadow: 0 0 20px rgb(var(--dark-accent-purple) / 0.3);
+  }
+
+  /**
+   * Figma 278:24325 — Sidebar ضيق (104px): تمرير عمودي بدون شريط التمرير الافتراضي
+   * (العجلة/اللمس يبقيان يعملان؛ يُفضَّل على الويندوز حيث يظهر شريط عريض)
+   */
+  .khabeer-sidebar-scroll {
+    overflow-y: auto;
+    overscroll-behavior: contain;
+    -webkit-overflow-scrolling: touch;
+    scrollbar-width: none;
+    -ms-overflow-style: none;
+  }
+
+  .khabeer-sidebar-scroll::-webkit-scrollbar {
+    display: none;
+    width: 0;
+    height: 0;
+  }
+}
+
+/* RTL Support */
+[dir="rtl"] {
+  direction: rtl;
+}
+
+[dir="ltr"] {
+  direction: ltr;
+}
+
+/* RTL-specific adjustments */
+[dir="rtl"] .space-x-3>*+* {
+  margin-right: 0.75rem;
+  margin-left: 0;
+}
+
+[dir="rtl"] .space-x-2>*+* {
+  margin-right: 0.5rem;
+  margin-left: 0;
+}
+
+[dir="rtl"] .space-x-4>*+* {
+  margin-right: 1rem;
+  margin-left: 0;
+}
+
+
+/* Mirror icons and elements in RTL */
+[dir="rtl"] .mr-2 {
+  margin-right: 0;
+  margin-left: 0.5rem;
+}
+
+@keyframes slide-in {
+  from {
+    transform: translateX(100%);
+    opacity: 0;
+  }
+
+  to {
+    transform: translateX(0);
+    opacity: 1;
+  }
+}
+
+.animate-slide-in {
+  animation: slide-in 0.3s ease-out;
+}
+
+[dir="rtl"] .mr-3 {
+  margin-right: 0;
+  margin-left: 0.75rem;
+}
+
+[dir="rtl"] .ml-auto {
+  margin-left: 0;
+  margin-right: auto;
+}
+
+/* Text alignment for RTL */
+[dir="rtl"] {
+  text-align: right;
+}
+
+[dir="rtl"] .text-left {
+  text-align: right;
+}
+
+[dir="rtl"] .text-right {
+  text-align: left;
+}
+
+/* هيدر الداشبورد: إزالة إطار التركيز الأزرق الافتراضي (Chrome/WebKit) على حقل البحث */
+#dashboard-header-search:focus,
+#dashboard-header-search:focus-visible {
+  outline: none !important;
+  box-shadow: none !important;
+}
+
+/* وظائف: حقل البحث — منع مظلّ/إطار التركيز الافتراضي (Chrome/WebKit) */
+#expert-jobs-search,
+#expert-jobs-search:focus,
+#expert-jobs-search:focus-visible {
+  outline: none !important;
+  box-shadow: none !important;
+  -webkit-tap-highlight-color: transparent;
+}
+
+#expert-jobs-search {
+  -webkit-appearance: none;
+  appearance: none;
+}
+
+#expert-jobs-search::-webkit-search-cancel-button,
+#expert-jobs-search::-webkit-search-decoration {
+  -webkit-appearance: none;
+  appearance: none;
+}
